@@ -1,6 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const connection = require("./mongodb/connection");
+
+// api version
+const { API_PRE } = require("./api/v1/constants");
+
+// api routes
+const userRoutes = require("./api/v1/routes/user");
+const adminRoutes = require("./api/v1/routes/admin");
+const collectionRoutes = require("./api/v1/routes/collection");
+const itemsRouter = require("./api/v1/routes/items");
+const searchRouter = require("./api/v1/routes/search");
 
 // initialize PORT
 const port = process.env.PORT || 8080;
@@ -16,7 +25,20 @@ app.use(cors());
 // connect to mongodb here
 require("./mongodb/connection");
 
-// routes come here
+// user middleware
+app.use(`${API_PRE}/user`, userRoutes);
+
+// admin middleware
+app.use(`${API_PRE}/admin`, adminRoutes);
+
+// collection middleware
+app.use(`${API_PRE}/collections`, collectionRoutes);
+
+// items middleware
+app.use(`${API_PRE}/items`, itemsRouter);
+
+// search middleware
+app.use(`${API_PRE}/search`, searchRouter);
 
 // listen the server on port 8080 or PORT given in .env file
 app.listen(port, () => console.log("App is running on port", port));
