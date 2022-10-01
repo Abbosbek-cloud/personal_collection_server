@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ItemsModel = mongoose.Schema({
+const ItemsModel = new mongoose.Schema({
   name: String,
   collectionId: String,
   tags: Array,

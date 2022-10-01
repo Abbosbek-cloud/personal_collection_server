@@ -8,11 +8,11 @@ const {
   editUser,
 } = require("../controllers/user");
 
-// user login route
-router.post("/auth/login", userLogin);
-
 // user signUp route
 router.post("/auth/signup", userSignup);
+
+// user login route
+router.post("/auth/login", userLogin);
 
 // edit user data
 router.put("/profile", editUser);
