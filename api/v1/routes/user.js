@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const app = require("express")();
 // controllers comes here
 const {
   userLogin,
@@ -7,6 +7,7 @@ const {
   userProfile,
   editUser,
 } = require("../controllers/user");
+const { isAuthorized } = require("../utils/auth");
 
 // user signUp route
 router.post("/auth/signup", userSignup);
@@ -14,10 +15,11 @@ router.post("/auth/signup", userSignup);
 // user login route
 router.post("/auth/login", userLogin);
 
+// app.use(isAuthorized());
 // edit user data
-router.put("/profile", editUser);
+router.put("/profile", isAuthorized, editUser);
 
 // user profile getter
-router.get("/profile", userProfile);
+router.get("/profile", isAuthorized, userProfile);
 
 module.exports = router;

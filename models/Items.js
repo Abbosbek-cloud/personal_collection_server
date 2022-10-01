@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 const ItemsModel = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
   collectionId: String,
-  tags: Array,
+  userId: String,
+  tags: [{ name: String }],
 });
 
 // creating Item model

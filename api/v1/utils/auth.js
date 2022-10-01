@@ -9,7 +9,7 @@ const createToken = (user) => {
 };
 
 const isAuthorized = async (req, res, next) => {
-  const authorization = req.headers;
+  const { authorization } = req.headers;
   if (authorization) {
     const token = authorization.slice(7, authorization.length);
     jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
