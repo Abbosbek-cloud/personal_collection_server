@@ -1,4 +1,5 @@
 const { getAllItems, getItemByCollectionId } = require("../controllers/item");
+const { isAuthorized } = require("../utils/auth");
 
 const router = require("express").Router();
 

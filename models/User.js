@@ -17,7 +17,11 @@ const UserModel = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
   },
-  isAdmin: {
+  role: {
+    type: String,
+    default: "USER",
+  },
+  status: {
     type: Boolean,
     default: false,
   },

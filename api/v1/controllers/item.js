@@ -1,8 +1,20 @@
+const Item = require("../../../models/Items");
+const app = require("express")();
+
 async function getItemByCollectionId(req, res) {
+  const { userId } = req.body;
+  const { id } = req.params;
   // get a user's collection
-  await res
-    .status(200)
-    .send({ message: "This collecction belong to this user" });
+  try {
+    const items = await Item.findOne({}).and([
+      {
+        userId,
+      },
+      {
+        collectionId: id,
+      },
+    ]);
+  } catch (error) {}
 }
 
 async function getAllItems(req, res) {

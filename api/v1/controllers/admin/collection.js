@@ -1,17 +1,61 @@
+const Collection = require("../../../../models/Collection");
+
 // admin controller for collections
 async function addCollection(req, res) {
   // add collection
-  await res.status(200).send({ message: "Collection added" });
+  try {
+    const { name, description, topic, image, userId } = req.body;
+
+    const newCollection = new Collection({
+      name,
+      description,
+      topic,
+      image,
+      userId,
+    });
+
+    const collection = await newCollection.save();
+
+    res
+      .status(200)
+      .send({ message: "Collection created successfully!", collection });
+  } catch (error) {
+    res.status(400).send({ message: "Collection error!" });
+  }
 }
 
 async function editCollection(req, res) {
   // edit collection
-  await res.status(200).send({ message: "Collection edited" });
+  try {
+    const { name, description, topic, image } = req.body;
+
+    const { id } = req.params;
+    const collection = await Collection.findOne({ _id: id });
+
+    collection.name = name ? name : collection.name;
+    collection.description = description ? description : collection.description;
+    collection.topic = topic ? topic : collection.topic;
+    collection.image = image ? image : collection.image;
+
+    const savedCollection = await collection.save();
+    res.status(200).send({
+      message: "Collection edited successfully!",
+      collection: savedCollection,
+    });
+  } catch (error) {
+    res.status(400).send({ message: "Error occured!" });
+  }
 }
 
 async function deleteCollection(req, res) {
   // collection deleted
-  await res.status(200).send({ message: "Collection deleted" });
+  const { id } = req.params;
+  try {
+    await Collection.findOneAndDelete({ _id: id });
+    res.status(200).send({ message: "Collection deleted successfully!" });
+  } catch (error) {
+    res.status(400).send({ message: "Error occured!" });
+  }
 }
 
 module.exports = { addCollection, editCollection, deleteCollection };

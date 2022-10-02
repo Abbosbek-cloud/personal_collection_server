@@ -1,8 +1,8 @@
 const User = require("../../../models/User");
-const bcrypt = require("bcryptjs");
-const { createToken } = require("../utils/auth");
 const Collection = require("../../../models/Collection");
 const Item = require("../../../models/Items");
+const bcrypt = require("bcryptjs");
+const { createToken } = require("../utils/auth");
 
 // user authorization controllers
 
@@ -76,11 +76,11 @@ async function userProfile(req, res) {
 }
 
 async function editUser(req, res) {
+  const currUser = await User.findById(req.body._id);
   try {
     const salt = bcrypt.genSaltSync(10);
     // user editor controller
     const { avatar, name, email, phone, password } = req.body;
-    const currUser = await User.findById(req.body._id);
 
     currUser.name = name ? name : currUser.name;
     currUser.email = email ? email : currUser.email;
@@ -96,7 +96,8 @@ async function editUser(req, res) {
       .status(200)
       .send({ message: "User updated successfully!", token, editedUser });
   } catch (error) {
-    res.status(400).send({ message: "Something went wrong!" });
+    console.log(error);
+    res.status(400).send({ error });
   }
 }
 
