@@ -16,11 +16,11 @@ async function addCollection(req, res) {
 
     const collection = await newCollection.save();
 
-    res
+    return res
       .status(200)
       .send({ message: "Collection created successfully!", collection });
   } catch (error) {
-    res.status(400).send({ message: "Collection error!" });
+    return res.status(400).send({ message: "Collection error!" });
   }
 }
 
@@ -38,12 +38,12 @@ async function editCollection(req, res) {
     collection.image = image ? image : collection.image;
 
     const savedCollection = await collection.save();
-    res.status(200).send({
+    return res.status(200).send({
       message: "Collection edited successfully!",
       collection: savedCollection,
     });
   } catch (error) {
-    res.status(400).send({ message: "Error occured!" });
+    return res.status(400).send({ message: "Error occured!" });
   }
 }
 
@@ -52,9 +52,11 @@ async function deleteCollection(req, res) {
   const { id } = req.params;
   try {
     await Collection.findOneAndDelete({ _id: id });
-    res.status(200).send({ message: "Collection deleted successfully!" });
+    return res
+      .status(200)
+      .send({ message: "Collection deleted successfully!" });
   } catch (error) {
-    res.status(400).send({ message: "Error occured!" });
+    return res.status(400).send({ message: "Error occured!" });
   }
 }
 

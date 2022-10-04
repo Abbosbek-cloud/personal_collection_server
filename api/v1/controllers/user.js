@@ -22,7 +22,7 @@ async function userSignup(req, res) {
 
     const token = createToken(newUser);
 
-    res.status(200).send({
+    return res.status(200).send({
       token,
       newUser,
     });
@@ -36,7 +36,7 @@ async function userSignup(req, res) {
     } else {
       errMsg = error.message;
     }
-    res.status(400).json({ message: errMsg });
+    return res.status(400).json({ message: errMsg });
   }
 }
 
@@ -48,15 +48,15 @@ async function userLogin(req, res) {
     const user = await User.findOne({ email });
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
       const token = createToken(user);
-      res.status(200).send({
+      return res.status(200).send({
         token,
         user,
       });
     } else {
-      res.status(400).send({ message: "Password or email is invalid!" });
+      return res.status(400).send({ message: "Password or email is invalid!" });
     }
   } else {
-    res.status(400).send({ message: "Fullfill all fields" });
+    return res.status(400).send({ message: "Fullfill all fields" });
   }
 }
 
@@ -72,7 +72,7 @@ async function userProfile(req, res) {
     collections,
     items,
   };
-  res.status(200).send({ message: "User found", data });
+  return res.status(200).send({ message: "User found", data });
 }
 
 async function editUser(req, res) {
@@ -97,7 +97,7 @@ async function editUser(req, res) {
       .send({ message: "User updated successfully!", token, editedUser });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ error });
+    return res.status(400).send({ error });
   }
 }
 

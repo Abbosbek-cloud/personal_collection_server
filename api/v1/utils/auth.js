@@ -17,14 +17,14 @@ const isAuthorized = async (req, res, next) => {
     const token = authorization.slice(7, authorization.length);
     jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
       if (err) {
-        res.status(400).send({ message: "Token is not valid" });
+        return res.status(400).send({ message: "Token is not valid" });
       } else {
         req.user = result;
         next();
       }
     });
   } else {
-    res.status(400).send({ message: "Token is not exist!" });
+    return res.status(400).send({ message: "Token is not exist!" });
   }
 };
 
@@ -33,7 +33,7 @@ const isAdmin = async (req, res, next) => {
     if (req.user.role === "MODERATOR" || "ADMIN") {
       next();
     } else {
-      res.status(400).send({ message: "This user is not exist!" });
+      return res.status(400).send({ message: "This user is not exist!" });
     }
   });
 };
@@ -43,7 +43,7 @@ const isModerator = async (req, res, next) => {
     if (req.user.role === "MODERATOR") {
       next();
     } else {
-      res.status(400).send({ message: "This user not exist!" });
+      return res.status(400).send({ message: "This user not exist!" });
     }
   });
 };

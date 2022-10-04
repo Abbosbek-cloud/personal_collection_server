@@ -12,9 +12,9 @@ async function makeUserAdmin(req, res) {
       user.role = "USER";
     }
     const savedUser = await user.save();
-    res.status(200).send({ message: "User is admin!", savedUser });
+    return res.status(200).send({ message: "User is admin!", savedUser });
   } catch (error) {
-    res.status(400).send({ message: "Something went wrong!" });
+    return res.status(400).send({ message: "Something went wrong!" });
   }
 }
 
@@ -23,9 +23,9 @@ async function deleteUser(req, res) {
   try {
     const { id } = req.params;
     await User.findOneAndDelete({ _id: id });
-    res.status(200).send({ message: "User deleted successfully!" });
+    return res.status(200).send({ message: "User deleted successfully!" });
   } catch (error) {
-    res.status(400).send({ message: "Something went wrong!" });
+    return res.status(400).send({ message: "Something went wrong!" });
   }
 }
 
@@ -36,14 +36,12 @@ async function blockUser(req, res) {
     const user = await User.findOne({ _id: id });
     user.status = !user.status;
     const savedUser = await user.save();
-    res
-      .status(200)
-      .send({
-        message: `User is ${user.status ? "blocked!" : "unblocked!"}`,
-        savedUser,
-      });
+    return res.status(200).send({
+      message: `User is ${user.status ? "blocked!" : "unblocked!"}`,
+      savedUser,
+    });
   } catch (error) {
-    res.status(400).send({ message: "Something went wrong!" });
+    return res.status(400).send({ message: "Something went wrong!" });
   }
 }
 
@@ -54,11 +52,11 @@ async function allUsersForAdmin(req, res) {
     const filtered = users.filter(
       (user) => user.role !== "MODERATOR" && user._id !== currUserId
     );
-    res
+    return res
       .status(200)
       .send({ message: "Users successfully sent!", usersList: filtered });
   } catch (error) {
-    res.status(200).send({ message: "Could not get users" });
+    return res.status(200).send({ message: "Could not get users" });
   }
 }
 
@@ -66,11 +64,11 @@ async function allUsersForModerator(req, res) {
   try {
     const users = await User.find({});
     const filtered = users.filter((user) => user.role !== "MODERATOR");
-    res
+    return res
       .status(200)
       .send({ message: "Users successfully sent!", usersList: filtered });
   } catch (error) {
-    res.status(200).send({ message: "Could not get users" });
+    return res.status(200).send({ message: "Could not get users" });
   }
 }
 
