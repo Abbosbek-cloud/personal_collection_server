@@ -38,6 +38,8 @@ async function editItem(req, res) {
     currItem.tags = tags;
     currItem.image = image;
 
+    const savedItem = await currItem.save();
+
     return res.status({ message: "Item edited successfully!" });
   } catch (error) {
     return res.status(400).send({ message: "Error occured!" });

@@ -16,7 +16,11 @@ async function getItemByCollectionId(req, res) {
         collectionId: id,
       },
     ]);
-  } catch (error) {}
+
+    return res.status(200).send(items);
+  } catch (error) {
+    return res.status(400).send({ message: "Error occured!" });
+  }
 }
 
 async function getAllItems(req, res) {
@@ -24,7 +28,9 @@ async function getAllItems(req, res) {
   try {
     const items = await Item.find({});
     return res.status(200).send(items);
-  } catch (error) {}
+  } catch (error) {
+    return res.status(200).send({ message: "Error occured!" });
+  }
 }
 
 module.exports = { getAllItems, getItemByCollectionId };
