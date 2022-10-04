@@ -29,12 +29,12 @@ async function addItem(req, res) {
 async function editItem(req, res) {
   try {
     const { id } = req.params;
-    const { name, collectionId, userId, tags, image } = req.body;
+    const { name, collectionId, tags, image } = req.body;
     const currItem = await Item.findOne({ _id: id });
 
     currItem.name = name;
     currItem.collectionId = collectionId;
-    currItem.userId = userId;
+    currItem.user = currItem.user;
     currItem.tags = tags;
     currItem.image = image;
 

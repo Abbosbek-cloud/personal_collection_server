@@ -1,17 +1,19 @@
 const Collection = require("../../../../models/Collection");
+const User = require("../../../../models/User");
 
 // admin controller for collections
 async function addCollection(req, res) {
   // add collection
   try {
     const { name, description, topic, image, userId } = req.body;
-
+    const user = await User.findOne({ _id: userId });
+    const currUser = { name: user.name, avatar: user.avatar };
     const newCollection = new Collection({
       name,
       description,
       topic,
       image,
-      userId,
+      user: currUser,
     });
 
     const collection = await newCollection.save();

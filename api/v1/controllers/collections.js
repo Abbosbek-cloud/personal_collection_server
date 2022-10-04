@@ -4,7 +4,7 @@ async function getUserCollection(req, res) {
   // get a user's collection
   try {
     const { id } = req.params;
-    const userCollections = await Collection.find({ userId: id });
+    const userCollections = await Collection.find({ user: { _id: id } });
     return res.status(200).send(userCollections);
   } catch (error) {
     return res.status(400).send({ message: "Error occured!" });

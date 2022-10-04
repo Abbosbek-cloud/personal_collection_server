@@ -8,7 +8,9 @@ async function getItemByCollectionId(req, res) {
   try {
     const items = await Item.findOne({}).and([
       {
-        userId,
+        user: {
+          _id: userId,
+        },
       },
       {
         collectionId: id,
@@ -19,6 +21,10 @@ async function getItemByCollectionId(req, res) {
 
 async function getAllItems(req, res) {
   // get all collecttions
+  try {
+    const items = await Item.find({});
+    return res.status(200).send(items);
+  } catch (error) {}
 }
 
 module.exports = { getAllItems, getItemByCollectionId };
