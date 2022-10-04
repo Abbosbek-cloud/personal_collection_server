@@ -1,6 +1,7 @@
 const {
   getUserCollection,
   getAllCollections,
+  getLatestCollections,
 } = require("../controllers/collections");
 
 const router = require("express").Router();
@@ -10,5 +11,8 @@ router.get(`/user/:id`, getUserCollection);
 
 // get all collection
 router.get(`/`, getAllCollections);
+
+// get latest collections
+router.get("/latest", getLatestCollections);
 
 module.exports = router;

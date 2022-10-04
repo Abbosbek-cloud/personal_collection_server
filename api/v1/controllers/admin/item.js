@@ -28,11 +28,30 @@ async function addItem(req, res) {
 // edit items from db
 async function editItem(req, res) {
   try {
-    const {} = req.body;
-  } catch (error) {}
+    const { id } = req.params;
+    const { name, collectionId, userId, tags, image } = req.body;
+    const currItem = await Item.findOne({ _id: id });
+
+    currItem.name = name;
+    currItem.collectionId = collectionId;
+    currItem.userId = userId;
+    currItem.tags = tags;
+    currItem.image = image;
+
+    return res.status({ message: "Item edited successfully!" });
+  } catch (error) {
+    return res.status(400).send({ message: "Error occured!" });
+  }
 }
 
 // delete items from db
-async function deleteItem(req, res) {}
+async function deleteItem(req, res) {
+  try {
+    await Item.findOneAndDelete({ _id: req.params.id });
+    return res.status(200).send({ message: "Item deleted successfully!" });
+  } catch (error) {
+    return res.status(400).send({ message: "Error occured!" });
+  }
+}
 
 module.exports = { addItem, deleteItem, editItem };
