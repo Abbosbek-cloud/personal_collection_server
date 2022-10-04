@@ -22,7 +22,13 @@ const app = express();
 // middlewares for project
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    optionsSuccessStatus: 200,
+    methods: ["POST", "PUT", "DELETE", "GET"],
+  })
+);
 
 // connect to mongodb here
 require("./mongodb/connection");
