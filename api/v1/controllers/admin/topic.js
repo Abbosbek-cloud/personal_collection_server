@@ -1,5 +1,4 @@
 const Topic = require("../../../../models/Topic");
-const User = require("../../../../models/User");
 
 // admin controller for Topics
 async function addTopic(req, res) {
