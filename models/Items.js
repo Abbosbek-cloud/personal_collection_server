@@ -5,6 +5,7 @@ const ItemsModel = new mongoose.Schema({
   collectionId: String,
   user: Object,
   tags: [{ name: String }],
+  likes: [{ isLiked: { type: Boolean, default: false }, authorId: String }],
   image: String,
 });
 
