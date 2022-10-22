@@ -4,6 +4,11 @@ const {
   editCollection,
   deleteCollection,
 } = require("../controllers/admin/collection");
+const {
+  addTopic,
+  editTopic,
+  deleteTopic,
+} = require("../controllers/admin/topic");
 const { addItem, editItem, deleteItem } = require("../controllers/admin/item");
 const {
   makeUserAdmin,
@@ -36,6 +41,18 @@ router.put(`/collections/:id`, isAuthorized, editCollection);
 
 // delete collection
 router.delete(`/collections/:id`, isAuthorized, deleteCollection);
+// ------------------------------------------------------- //
+
+// ----------- admin's routes with topics ----------- //
+
+// add Topic
+router.post(`/topics`, isAuthorized, addTopic);
+
+// edit Topic
+router.put(`/topics/:id`, isAuthorized, editTopic);
+
+// delete Topic
+router.delete(`/topics/:id`, isAuthorized, deleteTopic);
 // ------------------------------------------------------- //
 
 // ---------------- admin edit item routes --------------- //
