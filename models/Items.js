@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const ItemsModel = new mongoose.Schema({
   name: { type: String, required: true },
-  collectionId: String,
-  user: Object,
+  collectionObject: { name: String, image: String, _id: String },
+  user: { type: String, required: true, ref: "User" },
   tags: [{ name: String }],
   likes: [{ isLiked: { type: Boolean, default: false }, authorId: String }],
   image: String,

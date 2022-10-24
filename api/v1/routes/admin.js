@@ -67,7 +67,7 @@ router.delete(`/topics/:id`, isAuthorized, deleteTopic);
 router.post(`/items`, isAuthorized, addItem);
 
 // get one user items
-router.get("/user/items", isAuthorized, getOneUserItem);
+router.get("/user/items/:id", isAuthorized, getOneUserItem);
 
 // edit collection
 router.put(`/items/:id`, isAuthorized, editItem);

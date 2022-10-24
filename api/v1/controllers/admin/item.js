@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Collection = require("../../../../models/Collection");
 const Item = require("../../../../models/Items");
 const User = require("../../../../models/User");
 
@@ -15,7 +16,8 @@ async function addItem(req, res) {
       if (err) {
         return res.send({ message: "Authorization error" });
       } else {
-        user = result;
+        console.log(result);
+        user = result._id;
       }
     });
 
@@ -41,7 +43,7 @@ async function addItem(req, res) {
 async function editItem(req, res) {
   try {
     const { id } = req.params;
-    const { name, collectionId, tags, image } = req.body;
+    const { name, collection, tags, image } = req.body;
     const currItem = await Item.findOne({ _id: id });
 
     const { authorization } = req.headers;
@@ -53,12 +55,12 @@ async function editItem(req, res) {
       if (err) {
         return res.send({ message: "Authorization error" });
       } else {
-        user = result;
+        user = result._id;
       }
     });
 
     currItem.name = name;
-    currItem.collectionId = collectionId;
+    currItem.collectionObject = collection;
     currItem.user = user;
     currItem.tags = tags;
     currItem.image = image;
@@ -83,21 +85,16 @@ async function deleteItem(req, res) {
 
 async function getOneUserItem(req, res) {
   try {
-    const { authorization } = req.headers;
-    const token = authorization.slice(7, authorization.length);
-    let userId;
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        return res.send({ message: "Error occured" });
-      } else {
-        userId = user._id;
-      }
-    });
-    const userItems = await Item.findById({ user: { _id: userId } });
+    const { id } = req.params;
 
-    return res.send({ message: "Items sent", userItems });
+    const data = await Item.find({ user: id }).populate({
+      path: "User",
+      select: "name avatar _id",
+    });
+
+    return res.send({ message: "Items sent", userData: data });
   } catch (error) {
-    return res.send({ message: "Error occured" });
+    return res.send(error);
   }
 }
 module.exports = { addItem, deleteItem, editItem, getOneUserItem };
