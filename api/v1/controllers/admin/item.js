@@ -44,9 +44,22 @@ async function editItem(req, res) {
     const { name, collectionId, tags, image } = req.body;
     const currItem = await Item.findOne({ _id: id });
 
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+
+    let user;
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
+      if (err) {
+        return res.send({ message: "Authorization error" });
+      } else {
+        user = result;
+      }
+    });
+
     currItem.name = name;
     currItem.collectionId = collectionId;
-    currItem.user = currItem.user;
+    currItem.user = user;
     currItem.tags = tags;
     currItem.image = image;
 
@@ -68,4 +81,23 @@ async function deleteItem(req, res) {
   }
 }
 
-module.exports = { addItem, deleteItem, editItem };
+async function getOneUserItem(req, res) {
+  try {
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+    let userId;
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.send({ message: "Error occured" });
+      } else {
+        userId = user._id;
+      }
+    });
+    const userItems = await Item.findById({ user: { _id: userId } });
+
+    return res.send({ message: "Items sent", userItems });
+  } catch (error) {
+    return res.send({ message: "Error occured" });
+  }
+}
+module.exports = { addItem, deleteItem, editItem, getOneUserItem };
