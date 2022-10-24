@@ -1,16 +1,28 @@
+const jwt = require("jsonwebtoken");
 const Item = require("../../../../models/Items");
 const User = require("../../../../models/User");
 
 // adds items to db
 async function addItem(req, res) {
   try {
-    const { name, collectionId, userId, tags, image } = req.body;
-    const user = await User.findOne({ _id: userId });
-    const userData = { name: user.name, avatar: user.avatar };
+    const { name, collectionId, tags, image } = req.body;
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+
+    let user;
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
+      if (err) {
+        return res.send({ message: "Authorization error" });
+      } else {
+        user = result;
+      }
+    });
+
     const newItem = new Item({
       name,
       collectionId,
-      user: userData,
+      user,
       tags,
       image,
     });
