@@ -87,10 +87,16 @@ async function getOneUserItem(req, res) {
   try {
     const { id } = req.params;
 
-    const data = await Item.find({ user: id }).populate({
-      path: "User",
-      select: "name avatar _id",
-    });
+    const data = Item.find({ user: id })
+      .populate("user")
+      .populate("collectionId")
+      .exec((err, result) => {
+        if (err) {
+          return res.send(err);
+        } else {
+          return res.send(result);
+        }
+      });
 
     return res.send({ message: "Items sent", userData: data });
   } catch (error) {

@@ -3,6 +3,7 @@ const Collection = require("../../../models/Collection");
 const Item = require("../../../models/Items");
 const bcrypt = require("bcryptjs");
 const { createToken } = require("../utils/auth");
+const jwt = require("jsonwebtoken");
 
 // user authorization controllers
 
@@ -62,6 +63,17 @@ async function userLogin(req, res) {
 
 // user profile controllers
 async function userProfile(req, res) {
+  const { authorization } = req.headers;
+  const token = authorization.slice(7, authorization.length);
+  let userId;
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.send({ message: "Error occured" });
+    } else {
+      userId = user._id;
+    }
+  });
   const userId = req.body._id;
   // get a user profile controller
   const user = await User.findById(userId);
