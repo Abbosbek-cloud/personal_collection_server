@@ -74,7 +74,6 @@ async function userProfile(req, res) {
       userId = user._id;
     }
   });
-  const userId = req.body._id;
   // get a user profile controller
   const user = await User.findById(userId);
   const collections = await Collection.find({ userId });
