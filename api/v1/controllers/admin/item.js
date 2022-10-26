@@ -90,15 +90,7 @@ async function getOneUserItem(req, res) {
     const token = authorization.slice(7, authorization.length);
     const userId = getUserId(token);
 
-    const data = Item.find({ user: userId })
-      .populate({ path: "user", select: "name avatar _id" })
-      .exec((err, result) => {
-        if (err) {
-          return res.send(err);
-        } else {
-          console.log(result);
-        }
-      });
+    const data = Item.find({ user: userId });
 
     return res.send({ message: "Items sent", userData: data });
   } catch (error) {
