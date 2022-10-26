@@ -111,8 +111,8 @@ async function editUser(req, res) {
 async function getAllTopics(req, res) {
   try {
     const topics = await Topic.find({});
-
-    return res.send(topics);
+    console.log(topics);
+    return res.send({ topics });
   } catch (error) {
     return res.send({ message: "Error occured" });
   }
