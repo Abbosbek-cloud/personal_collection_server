@@ -1,13 +1,17 @@
 const Collection = require("../../../models/Collection");
+const { getUserId } = require("../utils/auth");
 
 async function getUserCollection(req, res) {
   // get a user's collection
   try {
-    const { id } = req.params;
-    const userCollections = await Collection.find({ user: { _id: id } });
-    return res.status(200).send(userCollections);
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+    const id = getUserId(token);
+    console.log(id);
+    const userCollections = await Collection.find({ user: JSON.stringify(id) });
+    return res.status(200).send({ userCollections, id });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    return res.status(400).send({ error });
   }
 }
 

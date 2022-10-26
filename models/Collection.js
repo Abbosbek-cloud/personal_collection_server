@@ -11,7 +11,7 @@ const CollectionModel = new mongoose.Schema({
     en: String,
   },
   image: String,
-  user: { type: String, required: true, ref: "User" },
+  user: { type: String },
 });
 
 // creating Collection model
