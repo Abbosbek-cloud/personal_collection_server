@@ -90,7 +90,7 @@ async function getOneUserItem(req, res) {
     const token = authorization.slice(7, authorization.length);
     const userId = getUserId(token);
 
-    const data = Item.find({ user: userId });
+    const data = Item.find({ user: userId }).populate("collectionId");
 
     return res.send({ message: "Items sent", userData: data });
   } catch (error) {
