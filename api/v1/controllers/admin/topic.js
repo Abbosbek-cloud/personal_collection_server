@@ -15,7 +15,7 @@ async function addTopic(req, res) {
       .status(200)
       .send({ message: "Topic created successfully!", Topic });
   } catch (error) {
-    return res.status(400).send({ message: "Topic error!" });
+    return res.status(400).send(error);
   }
 }
 
