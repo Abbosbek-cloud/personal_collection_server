@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const Collection = require("../../../../models/Collection");
 const Item = require("../../../../models/Items");
 const User = require("../../../../models/User");
+const { getUserId } = require("../../utils/auth");
 
 // adds items to db
 async function addItem(req, res) {
@@ -85,16 +86,17 @@ async function deleteItem(req, res) {
 
 async function getOneUserItem(req, res) {
   try {
-    const { id } = req.params;
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+    const userId = getUserId(token);
 
-    const data = Item.find({ user: id })
-      .populate("user")
-      .populate("collectionId")
+    const data = Item.find({ user: userId })
+      .populate({ path: "user", select: "name avatar _id" })
       .exec((err, result) => {
         if (err) {
           return res.send(err);
         } else {
-          return res.send(result);
+          console.log(result);
         }
       });
 
