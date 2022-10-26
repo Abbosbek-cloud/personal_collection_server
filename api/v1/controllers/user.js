@@ -4,6 +4,7 @@ const Item = require("../../../models/Items");
 const bcrypt = require("bcryptjs");
 const { createToken, getUserId } = require("../utils/auth");
 const jwt = require("jsonwebtoken");
+const Topic = require("../../../models/Topic");
 
 // user authorization controllers
 
@@ -107,4 +108,14 @@ async function editUser(req, res) {
   }
 }
 
-module.exports = { userLogin, userSignup, userProfile, editUser };
+async function getAllTopics(req, res) {
+  try {
+    const topics = await Topic.find({});
+
+    return res.send(topics);
+  } catch (error) {
+    return res.send({ message: "Error occured" });
+  }
+}
+
+module.exports = { userLogin, userSignup, userProfile, editUser, getAllTopics };

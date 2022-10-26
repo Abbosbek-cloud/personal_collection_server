@@ -6,6 +6,7 @@ const {
   userSignup,
   userProfile,
   editUser,
+  getAllTopics,
 } = require("../controllers/user");
 const { isAuthorized } = require("../utils/auth");
 
@@ -21,5 +22,8 @@ router.put("/profile", isAuthorized, editUser);
 
 // user profile getter
 router.get("/profile", isAuthorized, userProfile);
+
+// user topics
+router.get("/topics", isAuthorized, getAllTopics);
 
 module.exports = router;
