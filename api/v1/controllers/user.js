@@ -99,11 +99,10 @@ async function editUser(req, res) {
     const editedUser = await currUser.save();
 
     const token = createToken(editedUser);
-    res
+    return res
       .status(200)
       .send({ message: "User updated successfully!", token, editedUser });
   } catch (error) {
-    console.log(error);
     return res.status(400).send({ error });
   }
 }
