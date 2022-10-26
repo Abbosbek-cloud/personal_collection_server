@@ -82,7 +82,7 @@ async function editUser(req, res) {
 
     const currUserId = getUserId(userToken);
 
-    const currUser = await User.find({ _id: currUserId });
+    const currUser = await User.findOne({ _id: currUserId });
 
     const salt = bcrypt.genSaltSync(10);
     // user editor controller
@@ -103,6 +103,7 @@ async function editUser(req, res) {
       .status(200)
       .send({ message: "User updated successfully!", token, editedUser });
   } catch (error) {
+    console.log(error);
     return res.status(400).send({ error });
   }
 }
