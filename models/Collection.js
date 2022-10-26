@@ -6,10 +6,7 @@ const CollectionModel = new mongoose.Schema({
     uz: String,
     en: String,
   },
-  topic: {
-    uz: String,
-    en: String,
-  },
+  topic: { type: String, required: true, ref: "Topic" },
   image: String,
   user: { type: String },
 });

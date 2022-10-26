@@ -7,8 +7,10 @@ async function getUserCollection(req, res) {
     const { authorization } = req.headers;
     const token = authorization.slice(7, authorization.length);
     const id = getUserId(token);
-    console.log(id);
-    const userCollections = await Collection.find({ user: id });
+    const userCollections = await Collection.find({ user: id }).populate(
+      "topic"
+    );
+
     return res.status(200).send({ userCollections, id });
   } catch (error) {
     return res.status(400).send({ error });
@@ -33,7 +35,5 @@ async function getLatestCollections(req, res) {
     return res.status(400).send(error);
   }
 }
-
-
 
 module.exports = { getUserCollection, getAllCollections, getLatestCollections };

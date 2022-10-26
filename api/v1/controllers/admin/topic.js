@@ -4,17 +4,18 @@ const Topic = require("../../../../models/Topic");
 async function addTopic(req, res) {
   // add Topic
   try {
-    const { uz, en } = req.body;
+    const { name } = req.body;
     const newTopic = new Topic({
-      name: { uz, en },
+      name,
     });
 
-    const Topic = await newTopic.save();
+    const savedTopic = await newTopic.save();
 
     return res
       .status(200)
-      .send({ message: "Topic created successfully!", Topic });
+      .send({ message: "Topic created successfully!", topic: savedTopic });
   } catch (error) {
+    console.log(error);
     return res.status(400).send(error);
   }
 }
