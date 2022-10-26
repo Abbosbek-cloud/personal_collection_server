@@ -7,13 +7,12 @@ async function addCollection(req, res) {
   try {
     const { name, description, topic, image, userId } = req.body;
     const user = await User.findOne({ _id: userId });
-    const currUser = { name: user.name, avatar: user.avatar };
     const newCollection = new Collection({
       name,
       description,
       topic,
       image,
-      user: currUser,
+      user: userId,
     });
 
     const collection = await newCollection.save();

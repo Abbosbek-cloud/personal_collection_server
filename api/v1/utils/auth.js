@@ -48,4 +48,17 @@ const isModerator = async (req, res, next) => {
   });
 };
 
-module.exports = { isAuthorized, isAdmin, createToken, isModerator };
+const getUserId = (token) => {
+  let userId;
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.send({ message: "Error occured!" });
+    } else {
+      userId = user._id;
+    }
+  });
+
+  return userId;
+};
+
+module.exports = { isAuthorized, isAdmin, createToken, isModerator, getUserId };

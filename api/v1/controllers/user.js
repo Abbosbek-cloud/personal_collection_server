@@ -2,7 +2,7 @@ const User = require("../../../models/User");
 const Collection = require("../../../models/Collection");
 const Item = require("../../../models/Items");
 const bcrypt = require("bcryptjs");
-const { createToken } = require("../utils/auth");
+const { createToken, getUserId } = require("../utils/auth");
 const jwt = require("jsonwebtoken");
 
 // user authorization controllers
@@ -65,30 +65,25 @@ async function userLogin(req, res) {
 async function userProfile(req, res) {
   const { authorization } = req.headers;
   const token = authorization.slice(7, authorization.length);
-  let userId;
+  let userId = getUserId(token);
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.send({ message: "Error occured" });
-    } else {
-      userId = user._id;
-    }
-  });
   // get a user profile controller
   const user = await User.findById(userId);
-  const collections = await Collection.find({ userId });
-  const items = await Item.find({ userId });
   const data = {
     user,
-    collections,
-    items,
   };
   return res.status(200).send({ message: "User found", data });
 }
 
 async function editUser(req, res) {
-  const currUser = await User.findById(req.body._id);
   try {
+    const { authorization } = req.headers;
+    const userToken = authorization.slice(7, authorization.length);
+
+    const currUserId = getUserId(userToken);
+
+    const currUser = await User.find({ _id: currUserId });
+
     const salt = bcrypt.genSaltSync(10);
     // user editor controller
     const { avatar, name, email, phone, password } = req.body;
