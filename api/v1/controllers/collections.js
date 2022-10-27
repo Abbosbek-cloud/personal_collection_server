@@ -7,9 +7,7 @@ async function getUserCollection(req, res) {
     const { authorization } = req.headers;
     const token = authorization.slice(7, authorization.length);
     const id = getUserId(token);
-    const userCollections = await Collection.find({ user: id }).populate(
-      "topic"
-    );
+    const userCollections = await Collection.find({ user: id });
 
     return res.status(200).send({ userCollections, id });
   } catch (error) {

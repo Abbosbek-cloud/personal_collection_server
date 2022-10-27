@@ -1,12 +1,19 @@
 const Collection = require("../../../../models/Collection");
 const User = require("../../../../models/User");
+const { getUserId } = require("../../utils/auth");
 
 // admin controller for collections
 async function addCollection(req, res) {
   // add collection
   try {
-    const { name, description, topic, image, userId } = req.body;
-    const user = await User.findOne({ _id: userId });
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+    const userId = getUserId(token);
+
+    console.log(userId);
+
+    const { name, description, topic, image } = req.body;
+
     const newCollection = new Collection({
       name,
       description,

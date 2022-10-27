@@ -18,6 +18,6 @@ router.get(`/`, getAllCollections);
 router.get("/latest", getLatestCollections);
 
 // get one collection
-router.get('/collection/:id', isAuthorized, getOneCollection)
+router.get("/:id", isAuthorized, getOneCollection);
 
 module.exports = router;
