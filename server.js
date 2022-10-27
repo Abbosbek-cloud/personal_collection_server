@@ -27,7 +27,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://abek-collections.vercel.app/",
+      "https://abek-collections.vercel.app",
     ],
     optionsSuccessStatus: 200,
     methods: ["POST", "PUT", "DELETE", "GET"],
@@ -43,7 +43,7 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://abek-collections.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
