@@ -2,8 +2,12 @@ const mongoose = require("mongoose");
 
 const ItemsModel = new mongoose.Schema({
   name: { type: String, required: true },
-  collectionId: { type: String, required: true, ref: "Collection" },
-  user: { type: String, required: true, ref: "User" },
+  collectionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Collection",
+  },
+  user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   tags: [{ name: String }],
   likes: [{ isLiked: { type: Boolean, default: false }, authorId: String }],
   image: String,
