@@ -2,6 +2,7 @@ const {
   getUserCollection,
   getAllCollections,
   getLatestCollections,
+  getOneCollection,
 } = require("../controllers/collections");
 const { isAuthorized } = require("../utils/auth");
 
@@ -15,5 +16,8 @@ router.get(`/`, getAllCollections);
 
 // get latest collections
 router.get("/latest", getLatestCollections);
+
+// get one collection
+router.get('/collection/:id', isAuthorized, getOneCollection)
 
 module.exports = router;

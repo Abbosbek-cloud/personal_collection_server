@@ -27,6 +27,16 @@ async function getAllCollections(req, res) {
   }
 }
 
+async function getOneCollection(req, res) {
+  try {
+    const { id } = req.params;
+    const collection = await Collection.findOne({ _id: id });
+    return res.send(collection);
+  } catch (err) {
+    return res.send(err);
+  }
+}
+
 async function getLatestCollections(req, res) {
   try {
     const latestCollections = await Collection.find().sort({ createdAt: 1 });
@@ -36,4 +46,9 @@ async function getLatestCollections(req, res) {
   }
 }
 
-module.exports = { getUserCollection, getAllCollections, getLatestCollections };
+module.exports = {
+  getUserCollection,
+  getAllCollections,
+  getLatestCollections,
+  getOneCollection,
+};
