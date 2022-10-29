@@ -2,6 +2,8 @@ const {
   getAllItems,
   getItemByCollectionId,
   getUserItems,
+  getLastItems,
+  getOneItem,
 } = require("../controllers/item");
 const { isAuthorized } = require("../utils/auth");
 
@@ -15,5 +17,9 @@ router.get(`/collection/:id`, getItemByCollectionId);
 
 // get user items
 router.get("/user", isAuthorized, getUserItems);
+
+router.get("/latest", getLastItems);
+
+router.get("/:id", getOneItem);
 
 module.exports = router;

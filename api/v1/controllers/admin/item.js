@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Collection = require("../../../../models/Collection");
 const Item = require("../../../../models/Items");
-const User = require("../../../../models/User");
 const { getUserId } = require("../../utils/auth");
 
 // adds items to db
@@ -97,4 +95,5 @@ async function getOneUserItem(req, res) {
     return res.send(error);
   }
 }
+
 module.exports = { addItem, deleteItem, editItem, getOneUserItem };

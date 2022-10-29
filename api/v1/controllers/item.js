@@ -55,8 +55,33 @@ async function getUserItems(req, res) {
 
 async function getLastItems(req, res) {
   try {
-    const items = await Item.find({}).sort({ _id: -1 }).limit(15);
-  } catch (error) {}
+    const items = await Item.find({})
+      .populate("user", "_id name avatar")
+      .populate("collectionId", "_id name image")
+      .sort({ _id: -1 })
+      .limit(15);
+    return res.status(200).send({ items });
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 }
 
-module.exports = { getAllItems, getItemByCollectionId, getUserItems };
+async function getOneItem(req, res) {
+  try {
+    const { id } = req.params;
+
+    const currItem = await Item.find({ _id: id });
+
+    return res.status(200).send(currItem);
+  } catch (error) {
+    return res.status(400).send({ message: "Error" });
+  }
+}
+
+module.exports = {
+  getAllItems,
+  getItemByCollectionId,
+  getUserItems,
+  getOneItem,
+  getLastItems,
+};
