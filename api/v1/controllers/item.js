@@ -44,7 +44,7 @@ async function getUserItems(req, res) {
 
     const userItems = await Item.find({ user: userId }).populate(
       "collectionId",
-      "_id image"
+      "_id image name"
     );
 
     return res.send({ items: userItems });

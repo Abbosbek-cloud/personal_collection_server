@@ -36,7 +36,7 @@ async function addItem(req, res) {
     const savedItem = await newItem.save();
     return res.status(200).send({ message: "Item created!", item: savedItem });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    return res.status(400).send(error);
   }
 }
 
