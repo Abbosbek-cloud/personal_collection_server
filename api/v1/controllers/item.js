@@ -70,7 +70,10 @@ async function getOneItem(req, res) {
   try {
     const { id } = req.params;
 
-    const currItem = await Item.find({ _id: id });
+    const currItem = await Item.find({ _id: id }).populate(
+      "collectionId",
+      "_id name"
+    );
 
     return res.status(200).send(currItem);
   } catch (error) {
