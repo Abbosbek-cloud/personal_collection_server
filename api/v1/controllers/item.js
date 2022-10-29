@@ -1,4 +1,5 @@
 const Item = require("../../../models/Items");
+const { getUserId } = require("../utils/auth");
 const app = require("express")();
 
 async function getItemByCollectionId(req, res) {
@@ -33,10 +34,29 @@ async function getAllItems(req, res) {
   }
 }
 
+async function getUserItems(req, res) {
+  try {
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+    const userId = getUserId(token);
+
+    console.log(userId);
+
+    const userItems = await Item.find({ user: userId }).populate(
+      "collectionId",
+      "_id image"
+    );
+
+    return res.send({ items: userItems });
+  } catch (error) {
+    return res.send({ error });
+  }
+}
+
 async function getLastItems(req, res) {
   try {
     const items = await Item.find({}).sort({ _id: -1 }).limit(15);
   } catch (error) {}
 }
 
-module.exports = { getAllItems, getItemByCollectionId };
+module.exports = { getAllItems, getItemByCollectionId, getUserItems };

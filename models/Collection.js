@@ -6,7 +6,7 @@ const CollectionModel = new mongoose.Schema({
     uz: String,
     en: String,
   },
-  topic: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Topic" },
+  topic: { type: mongoose.Schema.Types.ObjectId, require: true, ref: "Topic" },
   image: String,
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });

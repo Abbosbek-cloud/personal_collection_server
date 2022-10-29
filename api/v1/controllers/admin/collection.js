@@ -10,8 +10,6 @@ async function addCollection(req, res) {
     const token = authorization.slice(7, authorization.length);
     const userId = getUserId(token);
 
-    console.log(userId);
-
     const { name, description, topic, image } = req.body;
 
     const newCollection = new Collection({
@@ -51,7 +49,7 @@ async function editCollection(req, res) {
       collection: savedCollection,
     });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    return res.status(400).send(error);
   }
 }
 

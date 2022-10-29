@@ -4,7 +4,7 @@ const UserModel = new mongoose.Schema({
   name: String,
   email: {
     type: String,
-    required: [true, "Email is required!"],
+    require: [true, "Email is require!"],
     unique: [true, "This email is already exist!"],
   },
   avatar: {
@@ -15,7 +15,7 @@ const UserModel = new mongoose.Schema({
   phone: String,
   password: {
     type: String,
-    required: [true, "Password is required"],
+    require: [true, "Password is required"],
   },
   role: {
     type: String,
