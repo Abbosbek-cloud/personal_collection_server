@@ -59,7 +59,7 @@ async function editItem(req, res) {
     });
 
     currItem.name = name;
-    currItem.collectionObject = collectionId;
+    currItem.collectionId = collectionId;
     currItem.user = user;
     currItem.tags = tags;
     currItem.image = image;
