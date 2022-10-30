@@ -20,6 +20,6 @@ router.get("/user", isAuthorized, getUserItems);
 
 router.get("/latest", getLastItems);
 
-router.get("/:id", isAuthorized, getOneItem);
+router.get("/:id", getOneItem);
 
 module.exports = router;
