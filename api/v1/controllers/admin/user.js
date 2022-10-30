@@ -86,10 +86,21 @@ async function allUsersForModerator(req, res) {
   }
 }
 
+async function getOneUserForAdmin(req, res) {
+  try {
+    const { id } = req.params;
+    const selectedUser = await User.find({ _id: id });
+    return res.send(selectedUser);
+  } catch (error) {
+    return res.send(error);
+  }
+}
+
 module.exports = {
   makeUserAdmin,
   deleteUser,
   adminEditUser,
   allUsersForAdmin,
   allUsersForModerator,
+  getOneUserForAdmin,
 };

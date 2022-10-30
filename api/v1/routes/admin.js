@@ -35,6 +35,7 @@ router.put(`/user/role/:id`, isAdmin, makeUserAdmin);
 router.get("/users/all", isAdmin, allUsersForAdmin);
 
 // get one user for edit
+router.get("/users/:id", isAdmin, getOneUserForAdmin);
 
 // deletes user
 router.delete(`/users/:id`, isAdmin, deleteUser);
