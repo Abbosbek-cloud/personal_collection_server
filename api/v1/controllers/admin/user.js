@@ -19,29 +19,6 @@ async function makeUserAdmin(req, res) {
   }
 }
 
-async function adminEditUser(req, res) {
-  try {
-    const { id } = req.params;
-    const foundUserById = await User.find({ _id: id });
-    const salt = bcrypt.genSaltSync(10);
-    // user editor controller
-
-    foundUserById.name = name ? name : foundUserById.name;
-    foundUserById.email = email ? email : foundUserById.email;
-    foundUserById.avatar = avatar ? avatar : foundUserById.avatar;
-    foundUserById.phone = phone ? phone : foundUserById.phone;
-    foundUserById.password = password
-      ? bcrypt.hashSync(password, salt)
-      : foundUserById.password;
-
-    const editedUser = await foundUserById.save();
-
-    return res.send({ message: "User edited successfully" });
-  } catch (error) {
-    return res.send(error);
-  }
-}
-
 async function deleteUser(req, res) {
   // user delete
   try {
@@ -53,7 +30,7 @@ async function deleteUser(req, res) {
   }
 }
 
-async function blockUser(req, res) {
+async function adminEditUser(req, res) {
   // block user
   try {
     const { avatar, name, email, phone, password } = req.body;
@@ -62,6 +39,7 @@ async function blockUser(req, res) {
     const user = await User.findOne({ _id: id });
 
     const salt = bcrypt.genSaltSync(10);
+    // blocks or unBlocks user
     user.status = !user.status;
 
     user.name = name ? name : user.name;
@@ -111,8 +89,7 @@ async function allUsersForModerator(req, res) {
 module.exports = {
   makeUserAdmin,
   deleteUser,
-  blockUser,
+  adminEditUser,
   allUsersForAdmin,
   allUsersForModerator,
-  adminEditUser,
 };
