@@ -20,9 +20,9 @@ const {
 const {
   makeUserAdmin,
   deleteUser,
-  blockUser,
   allUsersForAdmin,
   allUsersForModerator,
+  adminEditUser,
 } = require("../controllers/admin/user");
 const { isAdmin, isAuthorized, isModerator } = require("../utils/auth");
 
@@ -31,11 +31,16 @@ const { isAdmin, isAuthorized, isModerator } = require("../utils/auth");
 // makes a user admin
 router.put(`/user/role/:id`, isAdmin, makeUserAdmin);
 
+// get all users for admin
+router.get("/users/all", isAdmin, allUsersForAdmin);
+
+// get one user for edit
+
 // deletes user
 router.delete(`/users/:id`, isAdmin, deleteUser);
 
 // blocks user
-router.put(`/users/:id`, isAdmin, blockUser);
+router.put(`/users/:id`, isAdmin, adminEditUser);
 // ------------------------------------------------- //
 
 // ----------- admin's routes with collections ----------- //
@@ -82,10 +87,6 @@ router.put(`/items/:id`, isAuthorized, editItem);
 
 // delete collection
 router.delete(`/items/:id`, isAuthorized, deleteItem);
-// ------------------------------------------------------- //
-
-// ---------------- admin users route --------------- //
-router.get("/users/all", isAdmin, allUsersForAdmin);
 // ------------------------------------------------------- //
 
 // ---------------- moderator users route --------------- //
