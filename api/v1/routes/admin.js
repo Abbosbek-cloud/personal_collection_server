@@ -3,6 +3,7 @@ const {
   addCollection,
   editCollection,
   deleteCollection,
+  getAllCollectionsForAdmin,
 } = require("../controllers/admin/collection");
 const {
   addTopic,
@@ -47,6 +48,9 @@ router.put(`/collections/:id`, isAuthorized, editCollection);
 
 // delete collection
 router.delete(`/collections/:id`, isAuthorized, deleteCollection);
+
+// admin get all collections
+router.get("/collections/all", isAdmin, getAllCollectionsForAdmin);
 
 // ------------------------------------------------------- //
 

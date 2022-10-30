@@ -66,4 +66,22 @@ async function deleteCollection(req, res) {
   }
 }
 
-module.exports = { addCollection, editCollection, deleteCollection };
+async function getAllCollectionsForAdmin(req, res) {
+  try {
+    const collections = await Collection.find().populate(
+      "user",
+      "_id name avatar"
+    );
+
+    return res.send(collections);
+  } catch (error) {
+    return res.send(error);
+  }
+}
+
+module.exports = {
+  addCollection,
+  editCollection,
+  deleteCollection,
+  getAllCollectionsForAdmin,
+};
