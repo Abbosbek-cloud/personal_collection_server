@@ -3,6 +3,7 @@ const {
   getAllCollections,
   getLatestCollections,
   getOneCollection,
+  getBiggestCollectionEver,
 } = require("../controllers/collections");
 const { isAuthorized } = require("../utils/auth");
 
@@ -16,6 +17,9 @@ router.get(`/`, getAllCollections);
 
 // get latest collections
 router.get("/latest", getLatestCollections);
+
+// get biggest collection
+router.get("/biggest", getBiggestCollectionEver);
 
 // get one collection
 router.get("/:id", isAuthorized, getOneCollection);

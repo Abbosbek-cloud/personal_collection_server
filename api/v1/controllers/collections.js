@@ -1,4 +1,5 @@
 const Collection = require("../../../models/Collection");
+const Item = require("../../../models/Items");
 const { getUserId } = require("../utils/auth");
 
 async function getUserCollection(req, res) {
@@ -20,7 +21,7 @@ async function getUserCollection(req, res) {
 async function getAllCollections(req, res) {
   // get all collecttions
   try {
-    const collections = await Collection.find({});
+    const collections = await Collection.find({}).populate("topic", "_id name");
     return res.status(200).send(collections);
   } catch (error) {
     return res.status(400).send({ message: "Error occured!" });
@@ -52,8 +53,28 @@ async function getLatestCollections(req, res) {
 
 async function getBiggestCollectionEver(req, res) {
   try {
-    // const biggestCollections = await
-  } catch (error) {}
+    const collections = await Collection.find().select("_id");
+    console.log(collections);
+    let arrOfCollectonsWithItemIds;
+    if (collections?.length) {
+      for (var i = 0; i < collections.length; i++) {
+        const objectOfItemIds = await Item.findOne({
+          _id: collections[i]._id,
+        }).select("_id");
+        console.log(objectOfItemIds);
+        if (objectOfItemIds) {
+          arrOfCollectonsWithItemIds.push({
+            _id: collections[i],
+            items: objectOfItemIds,
+          });
+        }
+      }
+    }
+
+    return res.send(arrOfCollectonsWithItemIds);
+  } catch (error) {
+    return res.send(error);
+  }
 }
 
 module.exports = {
@@ -61,4 +82,5 @@ module.exports = {
   getAllCollections,
   getLatestCollections,
   getOneCollection,
+  getBiggestCollectionEver,
 };
