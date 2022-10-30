@@ -100,7 +100,9 @@ async function getOneUserItem(req, res) {
 // get all items for admin
 async function getAllItemsForAdmin(req, res) {
   try {
-    const items = await Item.find().populate("collectionId");
+    const items = await Item.find()
+      .populate("collectionId")
+      .populate("user", "_id name");
     return res.send(items);
   } catch (err) {
     console.log(err);
