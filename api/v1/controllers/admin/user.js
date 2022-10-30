@@ -1,4 +1,5 @@
 const User = require("../../../../models/User");
+const { getUserDetailByToken } = require("../../utils/auth");
 
 // admin controllers for users
 async function makeUserAdmin(req, res) {
@@ -47,14 +48,15 @@ async function blockUser(req, res) {
 
 async function allUsersForAdmin(req, res) {
   try {
-    const currUserId = req.body.userId;
-    const users = await User.find({});
-    const filtered = users.filter(
-      (user) => user.role !== "MODERATOR" && user._id !== currUserId
-    );
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+    const userData = getUserDetailByToken(token);
+
+    const users = await User.find({ _id: { $ne: userData._id } });
+
     return res
       .status(200)
-      .send({ message: "Users successfully sent!", usersList: filtered });
+      .send({ message: "Users successfully sent!", usersList: users });
   } catch (error) {
     return res.status(200).send({ message: "Could not get users" });
   }
