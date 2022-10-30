@@ -61,4 +61,23 @@ const getUserId = (token) => {
   return userId;
 };
 
-module.exports = { isAuthorized, isAdmin, createToken, isModerator, getUserId };
+const getUserDetailByToken = (token) => {
+  let details;
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      details = user;
+    }
+  });
+
+  return details;
+};
+module.exports = {
+  isAuthorized,
+  isAdmin,
+  createToken,
+  isModerator,
+  getUserId,
+  getUserDetailByToken,
+};

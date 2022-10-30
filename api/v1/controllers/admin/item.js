@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Item = require("../../../../models/Items");
-const { getUserId } = require("../../utils/auth");
+const { getUserId, getUserDetailByToken } = require("../../utils/auth");
 
 // adds items to db
 async function addItem(req, res) {
@@ -45,22 +45,8 @@ async function editItem(req, res) {
     const { name, collectionId, tags, image } = req.body;
     const currItem = await Item.findOne({ _id: id });
 
-    const { authorization } = req.headers;
-    const token = authorization.slice(7, authorization.length);
-
-    let user;
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
-      if (err) {
-        return res.send({ message: "Authorization error" });
-      } else {
-        user = result._id;
-      }
-    });
-
     currItem.name = name;
     currItem.collectionId = collectionId;
-    currItem.user = user;
     currItem.tags = tags;
     currItem.image = image;
 

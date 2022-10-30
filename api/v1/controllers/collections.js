@@ -21,6 +21,7 @@ async function getUserCollection(req, res) {
 async function getAllCollections(req, res) {
   // get all collecttions
   try {
+    const { drowdown } = req.params;
     const collections = await Collection.find({}).populate("topic");
     return res.status(200).send(collections);
   } catch (error) {
