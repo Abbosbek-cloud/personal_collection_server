@@ -60,7 +60,7 @@ async function getLastItems(req, res) {
       .populate("collectionId", "_id name image")
       .sort({ _id: -1 })
       .limit(15);
-    return res.status(200).send({ items });
+    return res.status(200).send(items);
   } catch (error) {
     return res.status(400).send(error);
   }
