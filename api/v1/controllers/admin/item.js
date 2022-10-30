@@ -42,7 +42,7 @@ async function addItem(req, res) {
 async function editItem(req, res) {
   try {
     const { id } = req.params;
-    const { name, collection, tags, image } = req.body;
+    const { name, collectionId, tags, image } = req.body;
     const currItem = await Item.findOne({ _id: id });
 
     const { authorization } = req.headers;
@@ -59,7 +59,7 @@ async function editItem(req, res) {
     });
 
     currItem.name = name;
-    currItem.collectionObject = collection;
+    currItem.collectionObject = collectionId;
     currItem.user = user;
     currItem.tags = tags;
     currItem.image = image;
