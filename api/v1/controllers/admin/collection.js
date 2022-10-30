@@ -68,10 +68,9 @@ async function deleteCollection(req, res) {
 
 async function getAllCollectionsForAdmin(req, res) {
   try {
-    const collections = await Collection.find().populate(
-      "user",
-      "_id name avatar"
-    );
+    const collections = await Collection.find()
+      .populate("user", "_id name avatar")
+      .populate("topic", "_id name");
 
     return res.send(collections);
   } catch (error) {
