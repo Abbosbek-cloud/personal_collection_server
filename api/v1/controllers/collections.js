@@ -41,11 +41,19 @@ async function getOneCollection(req, res) {
 
 async function getLatestCollections(req, res) {
   try {
-    const latestCollections = await Collection.find().sort({ createdAt: 1 });
+    const latestCollections = await Collection.find()
+      .sort({ createdAt: 1 })
+      .limit(15);
     return res.status(200).send(latestCollections);
   } catch (error) {
     return res.status(400).send(error);
   }
+}
+
+async function getBiggestCollectionEver(req, res) {
+  try {
+    // const biggestCollections = await
+  } catch (error) {}
 }
 
 module.exports = {

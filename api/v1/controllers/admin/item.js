@@ -96,4 +96,19 @@ async function getOneUserItem(req, res) {
   }
 }
 
-module.exports = { addItem, deleteItem, editItem, getOneUserItem };
+async function getAllItemsForAdmin(req, res) {
+  try {
+    const items = await Item.find();
+    return res.send(items);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = {
+  addItem,
+  deleteItem,
+  editItem,
+  getOneUserItem,
+  getAllItemsForAdmin,
+};

@@ -14,6 +14,7 @@ const {
   editItem,
   deleteItem,
   getOneUserItem,
+  getAllItemsForAdmin,
 } = require("../controllers/admin/item");
 const {
   makeUserAdmin,
@@ -68,6 +69,9 @@ router.post(`/items`, isAuthorized, addItem);
 
 // get one user items
 router.get("/user/items", isAuthorized, getOneUserItem);
+
+// get all items for admin
+router.get("/items", isAdmin, getAllItemsForAdmin);
 
 // edit collection
 router.put(`/items/:id`, isAuthorized, editItem);
