@@ -82,6 +82,7 @@ async function deleteItem(req, res) {
   }
 }
 
+// get user's items
 async function getOneUserItem(req, res) {
   try {
     const { authorization } = req.headers;
@@ -96,9 +97,10 @@ async function getOneUserItem(req, res) {
   }
 }
 
+// get all items for admin
 async function getAllItemsForAdmin(req, res) {
   try {
-    const items = await Item.find();
+    const items = await Item.find().populate("collectionId");
     return res.send(items);
   } catch (err) {
     console.log(err);
