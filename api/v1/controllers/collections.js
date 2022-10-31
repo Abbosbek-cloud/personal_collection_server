@@ -12,9 +12,9 @@ async function getUserCollection(req, res) {
       .populate("user", "_id email name  avatar")
       .populate("topic", "name");
 
-    return res.status(200).send({ userCollections });
+    res.status(200).send({ userCollections });
   } catch (error) {
-    return res.status(400).send({ error });
+    res.status(400).send({ error });
   }
 }
 
@@ -23,9 +23,9 @@ async function getAllCollections(req, res) {
   try {
     const { drowdown } = req.params;
     const collections = await Collection.find({}).populate("topic");
-    return res.status(200).send(collections);
+    res.status(200).send(collections);
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    res.status(400).send({ message: "Error occured!" });
   }
 }
 
@@ -35,9 +35,9 @@ async function getOneCollection(req, res) {
 
     console.log(id);
     const collection = await Collection.findOne({ _id: id });
-    return res.send(collection);
+    res.send(collection);
   } catch (err) {
-    return res.send(err);
+    res.send(err);
   }
 }
 
@@ -46,9 +46,9 @@ async function getLatestCollections(req, res) {
     const latestCollections = await Collection.find()
       .sort({ createdAt: 1 })
       .limit(15);
-    return res.status(200).send(latestCollections);
+    res.status(200).send(latestCollections);
   } catch (error) {
-    return res.status(400).send(error);
+    res.status(400).send(error);
   }
 }
 
@@ -72,9 +72,9 @@ async function getBiggestCollectionEver(req, res) {
       }
     }
 
-    return res.send(arrOfCollectonsWithItemIds);
+    res.send(arrOfCollectonsWithItemIds);
   } catch (error) {
-    return res.send(error);
+    res.send(error);
   }
 }
 

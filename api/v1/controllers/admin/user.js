@@ -13,9 +13,9 @@ async function makeUserAdmin(req, res) {
       user.role = "USER";
     }
     const savedUser = await user.save();
-    return res.status(200).send({ message: "User is admin!", savedUser });
+    res.status(200).send({ message: "User is admin!", savedUser });
   } catch (error) {
-    return res.status(400).send({ message: "Something went wrong!" });
+    res.status(400).send({ message: "Something went wrong!" });
   }
 }
 
@@ -24,9 +24,9 @@ async function deleteUser(req, res) {
   try {
     const { id } = req.params;
     await User.findOneAndDelete({ _id: id });
-    return res.status(200).send({ message: "User deleted successfully!" });
+    res.status(200).send({ message: "User deleted successfully!" });
   } catch (error) {
-    return res.status(400).send({ message: "Something went wrong!" });
+    res.status(400).send({ message: "Something went wrong!" });
   }
 }
 
@@ -49,12 +49,12 @@ async function adminEditUser(req, res) {
     user.password = password ? bcrypt.hashSync(password, salt) : user.password;
 
     const savedUser = await user.save();
-    return res.status(200).send({
+    res.status(200).send({
       message: `User is ${user.status ? "blocked!" : "unblocked!"}`,
       savedUser,
     });
   } catch (error) {
-    return res.status(400).send({ message: "Something went wrong!" });
+    res.status(400).send({ message: "Something went wrong!" });
   }
 }
 
@@ -66,11 +66,11 @@ async function allUsersForAdmin(req, res) {
 
     const users = await User.find({ _id: { $ne: userData._id } });
 
-    return res
+    res
       .status(200)
       .send({ message: "Users successfully sent!", usersList: users });
   } catch (error) {
-    return res.status(200).send({ message: "Could not get users" });
+    res.status(200).send({ message: "Could not get users" });
   }
 }
 
@@ -78,11 +78,11 @@ async function allUsersForModerator(req, res) {
   try {
     const users = await User.find({});
     const filtered = users.filter((user) => user.role !== "MODERATOR");
-    return res
+    res
       .status(200)
       .send({ message: "Users successfully sent!", usersList: filtered });
   } catch (error) {
-    return res.status(200).send({ message: "Could not get users" });
+    res.status(200).send({ message: "Could not get users" });
   }
 }
 
@@ -90,9 +90,9 @@ async function getOneUserForAdmin(req, res) {
   try {
     const { id } = req.params;
     const selectedUser = await User.find({ _id: id });
-    return res.send(selectedUser);
+    res.send(selectedUser);
   } catch (error) {
-    return res.send(error);
+    res.send(error);
   }
 }
 

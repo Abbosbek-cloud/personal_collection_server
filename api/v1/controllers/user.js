@@ -73,7 +73,7 @@ async function userProfile(req, res) {
   const data = {
     user,
   };
-  return res.status(200).send({ message: "User found", data });
+  res.status(200).send({ message: "User found", data });
 }
 
 async function editUser(req, res) {
@@ -100,11 +100,11 @@ async function editUser(req, res) {
     const editedUser = await currUser.save();
 
     const token = createToken(editedUser);
-    return res
+    res
       .status(200)
       .send({ message: "User updated successfully!", token, editedUser });
   } catch (error) {
-    return res.status(400).send({ error });
+    res.status(400).send({ error });
   }
 }
 
@@ -112,9 +112,9 @@ async function getAllTopics(req, res) {
   try {
     const topics = await Topic.find({});
 
-    return res.send({ topics });
+    res.send({ topics });
   } catch (error) {
-    return res.send({ message: "Error occured" });
+    res.send({ message: "Error occured" });
   }
 }
 

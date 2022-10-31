@@ -53,9 +53,9 @@ async function editItem(req, res) {
       { new: true }
     );
 
-    return res.status({ message: "Item edited successfully!" });
+    res.send({ message: "Item edited successfully!" });
   } catch (error) {
-    return res.status(400).send(error);
+    res.status(400).send(error);
   }
 }
 

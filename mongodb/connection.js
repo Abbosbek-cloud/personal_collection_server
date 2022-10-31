@@ -6,5 +6,10 @@ const mongoURL = process.env.DB_CONNECTION;
 mongoose.connect(
   mongoURL,
   { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: true },
-  () => console.log("DB connected")
+  (err) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("DB Connected");
+  }
 );

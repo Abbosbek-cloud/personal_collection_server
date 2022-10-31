@@ -18,9 +18,9 @@ async function getItemByCollectionId(req, res) {
       },
     ]);
 
-    return res.status(200).send(items);
+    res.status(200).send(items);
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    res.status(400).send({ message: "Error occured!" });
   }
 }
 
@@ -28,9 +28,9 @@ async function getAllItems(req, res) {
   // get all collecttions
   try {
     const items = await Item.find({}).populate("user");
-    return res.status(200).send(items);
+    res.status(200).send(items);
   } catch (error) {
-    return res.status(200).send({ message: "Error occured!" });
+    res.status(200).send({ message: "Error occured!" });
   }
 }
 
@@ -47,9 +47,9 @@ async function getUserItems(req, res) {
       "_id image name"
     );
 
-    return res.send({ items: userItems });
+    res.send({ items: userItems });
   } catch (error) {
-    return res.send({ error });
+    res.send({ error });
   }
 }
 
@@ -60,9 +60,9 @@ async function getLastItems(req, res) {
       .populate("collectionId", "_id name image")
       .sort({ _id: -1 })
       .limit(15);
-    return res.status(200).send(items);
+    res.status(200).send(items);
   } catch (error) {
-    return res.status(400).send(error);
+    res.status(400).send(error);
   }
 }
 
@@ -72,9 +72,9 @@ async function getOneItem(req, res) {
 
     const currItem = await Item.find({ _id: id }).populate("collectionId");
 
-    return res.status(200).send(currItem);
+    res.status(200).send(currItem);
   } catch (error) {
-    return res.status(400).send({ message: "Error" });
+    res.status(400).send({ message: "Error" });
   }
 }
 

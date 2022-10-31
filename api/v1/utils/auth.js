@@ -17,7 +17,7 @@ const isAuthorized = async (req, res, next) => {
     const token = authorization.slice(7, authorization.length);
     jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
       if (err) {
-        return res.status(400).send({ message: "Token is not valid" });
+        return res.status(400).send(err);
       } else {
         req.user = result;
         next();

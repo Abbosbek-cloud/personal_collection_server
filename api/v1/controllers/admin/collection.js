@@ -22,11 +22,11 @@ async function addCollection(req, res) {
 
     const collection = await newCollection.save();
 
-    return res
+    res
       .status(200)
       .send({ message: "Collection created successfully!", collection });
   } catch (error) {
-    return res.status(400).send({ message: "Collection error!" });
+    res.status(400).send({ message: "Collection error!" });
   }
 }
 
@@ -44,12 +44,12 @@ async function editCollection(req, res) {
     collection.image = image ? image : collection.image;
 
     const savedCollection = await collection.save();
-    return res.status(200).send({
+    res.status(200).send({
       message: "Collection edited successfully!",
       collection: savedCollection,
     });
   } catch (error) {
-    return res.status(400).send(error);
+    res.status(400).send(error);
   }
 }
 
@@ -58,11 +58,9 @@ async function deleteCollection(req, res) {
   const { id } = req.params;
   try {
     await Collection.findOneAndDelete({ _id: id });
-    return res
-      .status(200)
-      .send({ message: "Collection deleted successfully!" });
+    res.status(200).send({ message: "Collection deleted successfully!" });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    res.status(400).send({ message: "Error occured!" });
   }
 }
 
@@ -72,9 +70,9 @@ async function getAllCollectionsForAdmin(req, res) {
       .populate("user", "_id name avatar")
       .populate("topic", "_id name");
 
-    return res.send(collections);
+    res.send(collections);
   } catch (error) {
-    return res.send(error);
+    res.send(error);
   }
 }
 

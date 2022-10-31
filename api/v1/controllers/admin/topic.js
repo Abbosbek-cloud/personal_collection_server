@@ -11,12 +11,12 @@ async function addTopic(req, res) {
 
     const savedTopic = await newTopic.save();
 
-    return res
+    res
       .status(200)
       .send({ message: "Topic created successfully!", topic: savedTopic });
   } catch (error) {
     console.log(error);
-    return res.status(400).send(error);
+    res.status(400).send(error);
   }
 }
 
@@ -32,12 +32,12 @@ async function editTopic(req, res) {
     Topic.name.en = en ? en : Topic.name.en;
 
     const savedTopic = await Topic.save();
-    return res.status(200).send({
+    res.status(200).send({
       message: "Topic edited successfully!",
       Topic: savedTopic,
     });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    res.status(400).send({ message: "Error occured!" });
   }
 }
 
@@ -46,9 +46,9 @@ async function deleteTopic(req, res) {
   const { id } = req.params;
   try {
     await Topic.findOneAndDelete({ _id: id });
-    return res.status(200).send({ message: "Topic deleted successfully!" });
+    res.status(200).send({ message: "Topic deleted successfully!" });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    res.status(400).send({ message: "Error occured!" });
   }
 }
 
