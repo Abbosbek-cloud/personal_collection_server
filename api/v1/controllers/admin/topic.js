@@ -52,4 +52,13 @@ async function deleteTopic(req, res) {
   }
 }
 
-module.exports = { addTopic, editTopic, deleteTopic };
+async function getAllTopic(req, res){
+  try {
+    const topics = await Topic.find({});
+    res.send(topics);
+  } catch (error) {
+    res.send(error);
+  }
+}
+
+module.exports = { addTopic, editTopic, deleteTopic, getAllTopic };

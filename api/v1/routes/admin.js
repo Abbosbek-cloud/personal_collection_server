@@ -9,6 +9,7 @@ const {
   addTopic,
   editTopic,
   deleteTopic,
+  getAllTopic,
 } = require("../controllers/admin/topic");
 const {
   addItem,
@@ -63,14 +64,17 @@ router.get("/collections/all", isAdmin, getAllCollectionsForAdmin);
 
 // ----------- admin's routes with topics ----------- //
 
+// get all topics
+router.get('/topics', isAdmin, getAllTopic)
+
 // add Topic
-router.post(`/topics`, isAuthorized, addTopic);
+router.post(`/topics`, isAdmin, addTopic);
 
 // edit Topic
-router.put(`/topics/:id`, isAuthorized, editTopic);
+router.put(`/topics/:id`, isAdmin, editTopic);
 
 // delete Topic
-router.delete(`/topics/:id`, isAuthorized, deleteTopic);
+router.delete(`/topics/:id`, isAdmin, deleteTopic);
 // ------------------------------------------------------- //
 
 // ---------------- admin edit item routes --------------- //
