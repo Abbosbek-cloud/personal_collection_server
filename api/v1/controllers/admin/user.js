@@ -54,7 +54,7 @@ async function adminEditUser(req, res) {
       savedUser,
     });
   } catch (error) {
-    res.status(400).send({ message: "Something went wrong!" });
+    res.status(400).send(error);
   }
 }
 
