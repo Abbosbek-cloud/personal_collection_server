@@ -43,14 +43,16 @@ async function editItem(req, res) {
   try {
     const { id } = req.params;
     const { name, collectionId, tags, image } = req.body;
-    const currItem = await Item.findOne({ _id: id });
-
-    currItem.name = name;
-    currItem.collectionId = collectionId;
-    currItem.tags = tags;
-    currItem.image = image;
-
-    await currItem.save();
+    const currItem = await Item.findByIdAndUpdate(
+      id,
+      {
+        name: name,
+        collectionId: collectionId,
+        tags: tags,
+        image: image,
+      },
+      { new: true }
+    );
 
     return res.status({ message: "Item edited successfully!" });
   } catch (error) {
