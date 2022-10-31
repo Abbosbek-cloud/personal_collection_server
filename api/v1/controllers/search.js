@@ -50,4 +50,21 @@ async function searchFromDb(req, res) {
   }
 }
 
-module.exports = { searchFromDb };
+async function searchByTagName(req, res){
+  try {
+    const filter = req.params.filter !== undefined ? "" : req.params.filter;
+    const items = await Item.find({
+      tags: { 
+        $elemMatch: { 
+          name: filter
+        }
+      }
+   })
+
+   res.send(items)
+  } catch (error) {
+   res.send(error)
+  }
+}
+
+module.exports = { searchFromDb, searchByTagName };
