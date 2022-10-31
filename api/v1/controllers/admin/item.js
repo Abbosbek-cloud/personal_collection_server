@@ -41,10 +41,9 @@ async function addItem(req, res) {
 // edit items from db
 async function editItem(req, res) {
   try {
-    const { id } = req.params;
     const { name, collectionId, tags, image } = req.body;
-    const currItem = await Item.findByIdAndUpdate(
-      id,
+    await Item.findByIdAndUpdate(
+      req.params.id,
       {
         name: name,
         collectionId: collectionId,
@@ -56,7 +55,7 @@ async function editItem(req, res) {
 
     return res.status({ message: "Item edited successfully!" });
   } catch (error) {
-    return res.status(400).send({ message: "Error occured!" });
+    return res.status(400).send(error);
   }
 }
 
