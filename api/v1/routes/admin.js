@@ -23,6 +23,7 @@ const {
   allUsersForAdmin,
   allUsersForModerator,
   adminEditUser,
+  getOneUserForAdmin,
 } = require("../controllers/admin/user");
 const { isAdmin, isAuthorized, isModerator } = require("../utils/auth");
 
