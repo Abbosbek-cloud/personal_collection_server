@@ -22,6 +22,6 @@ router.get("/latest", getLatestCollections);
 router.get("/biggest", getBiggestCollectionEver);
 
 // get one collection
-router.get("/:id", isAuthorized, getOneCollection);
+router.get("/:id", getOneCollection);
 
 module.exports = router;

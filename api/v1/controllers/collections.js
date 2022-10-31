@@ -33,7 +33,6 @@ async function getOneCollection(req, res) {
   try {
     const { id } = req.params;
 
-    console.log(id);
     const collection = await Collection.findOne({ _id: id });
     res.send(collection);
   } catch (err) {
