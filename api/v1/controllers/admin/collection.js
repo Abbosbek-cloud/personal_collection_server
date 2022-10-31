@@ -36,17 +36,20 @@ async function editCollection(req, res) {
     const { name, description, topic, image } = req.body;
 
     const { id } = req.params;
-    const collection = await Collection.findOne({ _id: id });
+    
+    await Collection.findByIdAndUpdate(id, {
+      name: name,
+      description: description,
+      topic: topic,
+      image: image,
+    },{
+      new: true
+    });
 
-    collection.name = name ? name : collection.name;
-    collection.description = description ? description : collection.description;
-    collection.topic = topic ? topic : collection.topic;
-    collection.image = image ? image : collection.image;
-
-    const savedCollection = await collection.save();
+    
+    
     res.status(200).send({
       message: "Collection edited successfully!",
-      collection: savedCollection,
     });
   } catch (error) {
     res.status(400).send(error);
