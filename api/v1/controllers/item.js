@@ -72,11 +72,11 @@ async function getOneItem(req, res) {
 
     const currItem = await Item.find({ _id: id })
       .populate("collectionId")
-      .populate("topic");
+      
 
     res.status(200).send(currItem);
   } catch (error) {
-    res.status(400).send({ message: "Error" });
+    res.status(400).send(error);
   }
 }
 
