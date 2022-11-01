@@ -33,7 +33,10 @@ async function getOneCollection(req, res) {
   try {
     const { id } = req.params;
 
-    const collection = await Collection.findOne({ _id: id }).populate('topic', '_id name');
+    const collection = await Collection.findOne({ _id: id }).populate(
+      "topic",
+      "_id name"
+    );
     res.send(collection);
   } catch (err) {
     res.send(err);
