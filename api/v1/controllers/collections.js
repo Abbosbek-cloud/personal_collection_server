@@ -45,6 +45,8 @@ async function getOneCollection(req, res) {
 async function getLatestCollections(req, res) {
   try {
     const latestCollections = await Collection.find()
+      .populate("topic")
+      .populate("user", "_id avatar")
       .sort({ createdAt: 1 })
       .limit(15);
     res.status(200).send(latestCollections);
