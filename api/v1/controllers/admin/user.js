@@ -40,7 +40,6 @@ async function adminEditUser(req, res) {
 
     const salt = bcrypt.genSaltSync(10);
     // blocks or unBlocks user
-    user.status = !user.status;
 
     user.name = name ? name : user.name;
     user.email = email ? email : user.email;
@@ -55,6 +54,18 @@ async function adminEditUser(req, res) {
     });
   } catch (error) {
     res.status(400).send(error);
+  }
+}
+
+async function adminBlockUser(req, res){
+  try {
+    const { id } = req.params;
+    const currUser = await User.findOne({_id : id});
+    currUser.status = !currUser.status;
+    await currUser.save()
+    res.send({message: `User ${currUser.status ? 'blocked' : 'unblocked'} successfully!`})
+  } catch (error) {
+    res.send(error);
   }
 }
 
@@ -103,4 +114,5 @@ module.exports = {
   allUsersForAdmin,
   allUsersForModerator,
   getOneUserForAdmin,
+  adminBlockUser,
 };
