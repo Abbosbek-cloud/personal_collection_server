@@ -46,7 +46,7 @@ async function getLatestCollections(req, res) {
   try {
     const latestCollections = await Collection.find()
       .populate("topic")
-      .populate("user", "_id avatar")
+      .populate("user", "_id avatar name email")
       .sort({ createdAt: 1 })
       .limit(15);
     res.status(200).send(latestCollections);
