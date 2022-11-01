@@ -27,7 +27,9 @@ async function getItemByCollectionId(req, res) {
 async function getAllItems(req, res) {
   // get all collecttions
   try {
-    const items = await Item.find({}).populate("user");
+    const items = await Item.find({})
+      .populate("user", "_id name avatar email")
+      .populate("collectionId", "_id name");
     res.status(200).send(items);
   } catch (error) {
     res.status(200).send({ message: "Error occured!" });
@@ -70,9 +72,7 @@ async function getOneItem(req, res) {
   try {
     const { id } = req.params;
 
-    const currItem = await Item.find({ _id: id })
-      .populate("collectionId")
-      
+    const currItem = await Item.find({ _id: id }).populate("collectionId");
 
     res.status(200).send(currItem);
   } catch (error) {
