@@ -44,6 +44,10 @@ async function searchFromDb(req, res) {
       },
     ]);
 
+    if (filter.length === 0) {
+      return res.send({ collections: [], items: [] });
+    }
+
     res.status(200).send({ collections: collections, items: items });
   } catch (error) {
     res.status(400).send(error);
