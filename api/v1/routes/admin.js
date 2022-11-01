@@ -26,16 +26,21 @@ const {
   adminEditUser,
   getOneUserForAdmin,
   adminBlockUser,
+  blockItself,
 } = require("../controllers/admin/user");
 const { isAdmin, isAuthorized, isModerator } = require("../utils/auth");
 
 // ----------- admin's routes with users ----------- //
+
 
 // makes a user admin
 router.put(`/user/role/:id`, isAdmin, makeUserAdmin);
 
 // get all users for admin
 router.get("/users/all", isAdmin, allUsersForAdmin);
+
+// delete itself 
+router.put('/block/itself', isAdmin, blockItself)
 
 // block user
 router.put('/block/user/:id', isAdmin, adminBlockUser)
@@ -48,7 +53,6 @@ router.delete(`/users/:id`, isAdmin, deleteUser);
 
 // blocks user
 router.put(`/users/:id`, isAdmin, adminEditUser);
-
 
 // ------------------------------------------------- //
 

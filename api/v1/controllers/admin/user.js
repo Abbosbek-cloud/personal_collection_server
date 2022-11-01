@@ -69,6 +69,25 @@ async function adminBlockUser(req, res){
   }
 }
 
+async function blockItself(req, res) {
+  try {
+    const { authorization } = req.headers;
+    const token = authorization.slice(7, authorization.length);
+
+    const userData = getUserDetailByToken(token);
+
+    const currUser = await User.findOne({ _id: id });
+
+    currUser.status = true;
+
+    await currUser.save()
+
+    res.send({message: 'Admin blocked itself', route: '/'});
+  } catch (error) {
+    res.send(error);
+  }
+}
+
 async function allUsersForAdmin(req, res) {
   try {
     const { authorization } = req.headers;
@@ -115,4 +134,5 @@ module.exports = {
   allUsersForModerator,
   getOneUserForAdmin,
   adminBlockUser,
+  blockItself
 };
