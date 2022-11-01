@@ -4,6 +4,7 @@ const {
   getUserItems,
   getLastItems,
   getOneItem,
+  getSimilarItems,
 } = require("../controllers/item");
 const { isAuthorized } = require("../utils/auth");
 
@@ -19,6 +20,8 @@ router.get(`/collection/:id`, getItemByCollectionId);
 router.get("/user", isAuthorized, getUserItems);
 
 router.get("/latest", getLastItems);
+
+router.get("/similar/:id", getSimilarItems);
 
 router.get("/:id", getOneItem);
 

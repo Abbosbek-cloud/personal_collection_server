@@ -80,10 +80,21 @@ async function getOneItem(req, res) {
   }
 }
 
+async function getSimilarItems(req, res) {
+  try {
+    const { id } = req.params;
+    const similarItems = await Item.find({ collectionId: id });
+    res.send(similarItems);
+  } catch (error) {
+    res.send(error);
+  }
+}
+
 module.exports = {
   getAllItems,
   getItemByCollectionId,
   getUserItems,
   getOneItem,
   getLastItems,
+  getSimilarItems,
 };
